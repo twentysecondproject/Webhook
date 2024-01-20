@@ -1,0 +1,51 @@
+<html>
+
+<body>
+    <button onclick="get()">New Joke</button>
+    <script>
+        function get() {
+            const url = "https://v2.jokeapi.dev/joke/any?type=twopart"
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const set = data.setup;
+                    const punch = data.delivery;
+
+                    var request = new XMLHttpRequest();
+                    request.open("POST", "https://discord.com/api/webhooks/1169661393599995904/o_VfcZO-p4EaoqkbukbdTBu9iy7Umxf15RsFZQ-jFjrag0CtgX9PntrLA6dtA4A3mff1");
+                    request.setRequestHeader('Content-type', 'application/json');
+
+                    var paramsset = {
+                        content: set
+                    }
+
+                    request.send(JSON.stringify(paramsset));
+
+                    setTimeout(function () {
+                        var request = new XMLHttpRequest();
+                        request.open("POST", "https://discord.com/api/webhooks/1169661393599995904/o_VfcZO-p4EaoqkbukbdTBu9iy7Umxf15RsFZQ-jFjrag0CtgX9PntrLA6dtA4A3mff1");
+                        request.setRequestHeader('Content-type', 'application/json');
+
+                        var parampunch = {
+                            content: punch
+                        }
+
+                        request.send(JSON.stringify(parampunch));
+                    }, 3000);
+
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+    </script>
+</body>
+
+</html>
